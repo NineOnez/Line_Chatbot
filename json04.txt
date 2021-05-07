@@ -1,0 +1,195 @@
+var ss = SpreadsheetApp.openByUrl(httpsdocs.google.comspreadsheetsd14-Rm4-ilmCpehm0RltM3VeKRJiQhiMH1w4YVh9n9bqQedit);
+var sheet = ss.getSheetByName(Main);
+
+function doPost(e)
+{ 
+ var data = JSON.parse(e.postData.contents)
+ var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+ 
+ var userCommand = userMsg.split(,);
+  var sheet = ss.getSheetByName(userCommand[0]);
+var values = sheet.getRange(1, 1, sheet.getLastRow(),sheet.getLastColumn()).getValues(); 
+
+for(var i = 0;ivalues.length; i++)
+ { 
+   if(userCommand[0] == ต้องการจองคิววันที่)
+   {
+     if(values[i][0].toString() == userCommand[1])
+     {
+      var Data = sheet.getRange(i+1,6).getValue();
+      var result = {fulfillmentMessages [{platform line,type 4,payload  {line  
+      {
+        type template,
+        altText this is a confirm template,
+        template {
+            type confirm,
+            text วันที่  + userCommand[1] + เม.ย. 2564 + nมีคิวว่างอยู่ + Data +  คิว,
+            actions [
+                {
+                  type message,
+                  label จองเลย,
+                  text จองเลย, + userCommand[1]
+                },
+                {
+                  type message,
+                  label ดูวันอื่น,
+                  text ดูวันอื่น
+                }
+                      ]
+                    }
+      }
+}}]}
+      var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+      return replyJSON;
+     }
+   }
+   
+    จองเวลา
+   if(userCommand[0] == จองเลย)
+   {
+     if(values[i][0].toString() == userCommand[1])
+     {
+        var Data01 = sheet.getRange(i+1,2).getValue();
+        var Data02 = sheet.getRange(i+1,3).getValue();
+        var Data03 = sheet.getRange(i+1,4).getValue();
+        var Data04 = sheet.getRange(i+1,5).getValue();
+        
+        var result = {fulfillmentMessages [{platform line,type 4,payload  
+        {
+          line {
+            template {
+              imageSize cover,
+              imageAspectRatio rectangle,
+              columns [
+                {
+                  thumbnailImageUrl httpsmiro.medium.commax40001vb3Ha69xG7HcV0xJyqigBw.jpeg,
+                  title จองเวลาบุฟเฟต์,
+                  text เวลา 16.00 - 17.30,
+                  actions [
+                    {
+                      type message,
+                      label Data01,
+                      text ต้องการจองคิววันนี้,+ userCommand[1] +,เวลา 16.00 - 17.30,จองแล้ว
+                    }
+                  ],
+                  defaultAction {
+                    label View detail,
+                    type uri,
+                    uri httpexample.compage123
+                  },
+                  imageBackgroundColor #FFFFFF
+                },
+                {
+                  text เวลา 17.30 - 19.00,
+                  actions [
+                    {
+                      type message,
+                      label Data02,
+                      text ต้องการจองคิววันนี้,+ userCommand[1] +,เวลา 17.30 - 19.00,จองแล้ว
+                    }
+                  ],
+                  title จองเวลาบุฟเฟต์,
+                  thumbnailImageUrl httpsamazingcouple.netwp-contentuploads201912All-New-Copper-Buffet-1.jpg,
+                  imageBackgroundColor #FFFFFF,
+                  defaultAction {
+                    type uri,
+                    label View detail,
+                    uri httpexample.compage123
+                  }
+                },
+                {
+                  imageBackgroundColor #FFFFFF,
+                  defaultAction {
+                    uri httpexample.compage123,
+                    type uri,
+                    label View detail
+                  },
+                  thumbnailImageUrl httpsgourmetbangkok.comwp-contentuploads201811Up-Above_Friday-Saturday-Seafood-Buffet_11.jpg,
+                  text เวลา 19.00 - 20.30,
+                  title จองเวลาบุฟเฟต์,
+                  actions [
+                    {
+                      type message,
+                      label Data03,
+                      text ต้องการจองคิววันนี้,+ userCommand[1] +,เวลา 19.00 - 20.30,จองแล้ว
+                    }
+                  ]
+                },
+                {
+                  imageBackgroundColor #FFFFFF,
+                  thumbnailImageUrl httpsmedia-cdn.tripadvisor.commediaphoto-s12201c9dsunday-brunch.jpg,
+                  text เวลา 20.30 - 22.00,
+                  defaultAction {
+                    label View detail,
+                    uri httpexample.compage123,
+                    type uri
+                  },
+                  actions [
+                    {
+                      type message,
+                      label Data04,
+                      text ต้องการจองคิววันนี้,+ userCommand[1] +,เวลา 20.30 - 22.00,จองแล้ว
+                    }
+                  ],
+                  title จองเวลาบุฟเฟต์
+                }
+              ],
+              type carousel
+            },
+            type template,
+            altText this is a carousel template
+          }
+        }
+        }]}
+      var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+      return replyJSON;
+     }
+     }
+   
+   if(userCommand[0] == ต้องการจองคิววันนี้)
+   {
+      date
+    if(values[i][0].toString() == userCommand[1])
+    { 
+      var Data1 = sheet.getRange(i+1,2).getValue();
+      var Data2 = sheet.getRange(i+1,3).getValue();
+      var Data3 = sheet.getRange(i+1,4).getValue();
+      var Data4 = sheet.getRange(i+1,5).getValue();
+      time
+      if(userCommand[2] == เวลา 16.00 - 17.30 && Data1 == ว่าง)
+      {
+        sheet.getRange(i+1,2).setValue(userCommand[3]);
+        var result = { fulfillmentMessages [{platform line,type 4,payload  {line {type text,text จองสำเร็จ กรุณากรอกชื่อและเบอร์โทร ในลิงค์นี้ครับ httpsliff.line.me1655908272-bPlDKYQo}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      if(userCommand[2] == เวลา 17.30 - 19.00 && Data2 == ว่าง)
+      {
+        sheet.getRange(i+1,3).setValue(userCommand[3]);
+        var result = { fulfillmentMessages [{platform line,type 4,payload  {line {type text,text จองสำเร็จ กรุณากรอกชื่อและเบอร์โทร ในลิงค์นี้ครับ httpsliff.line.me1655908272-bPlDKYQo}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      if(userCommand[2] == เวลา 19.00 - 20.30 && Data3 == ว่าง)
+      {
+        sheet.getRange(i+1,4).setValue(userCommand[3]);
+        var result = { fulfillmentMessages [{platform line,type 4,payload  {line {type text,text จองสำเร็จ กรุณากรอกชื่อและเบอร์โทร ในลิงค์นี้ครับ httpsliff.line.me1655908272-bPlDKYQo}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      if(userCommand[2] == เวลา 20.30 - 22.00 && Data4 == ว่าง)
+      {
+        sheet.getRange(i+1,5).setValue(userCommand[3]);
+        var result = { fulfillmentMessages [{platform line,type 4,payload  {line {type text,text จองสำเร็จ กรุณากรอกชื่อและเบอร์โทร ในลิงค์นี้ครับ httpsliff.line.me1655908272-bPlDKYQo}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      }
+    }
+ }
+   
+ 
+var result = { fulfillmentMessages [{platform line,type 4,payload  {line {type text,text มีรายการจองคิวเวลานี้เรียบร้อยแล้ว กรุณาจองเวลาอื่นครับ โปรดระบุวันที่ต้องการจองคิวใหม่ครับ}}}]}
+var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+return replyJSON;
+}

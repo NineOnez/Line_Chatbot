@@ -1,0 +1,221 @@
+var ss = SpreadsheetApp.openByUrl("https://docs.google.com/spreadsheets/d/1rkl_YQDgVE58aNQ_HtuJIOlpVm71SFCPLqwLGEvxXs8/edit");
+var sheet = ss.getSheetByName("Main");
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function doPost(e)
+{ 
+ var data = JSON.parse(e.postData.contents)
+ var userMsg = data.originalDetectIntentRequest.payload.data.message.text;
+ 
+ var userCommand = userMsg.split(",");
+ // var sheet = ss.getSheetByName(userCommand[0]);
+var values = sheet.getRange(1, 1, sheet.getLastRow(),sheet.getLastColumn()).getValues(); 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+for(var i = 0;i<values.length; i++)
+ { 
+   if(userCommand[0] == "ต้องการจองคิววันที่")
+   {
+     if(values[i][0].toString() == userCommand[1])
+     {
+      var Data = sheet.getRange(i+1,7).getValue();
+      var result = {"fulfillmentMessages": [{"platform": "line","type": 4,"payload" : {"line":  
+      {
+        "type": "template",
+        "altText": "this is a confirm template",
+        "template": {
+            "type": "confirm",
+            "text": "วันที่ " + userCommand[1] + "เม.ย. 2564" + "\nมีคิวว่างอยู่ "+ Data + " คิว",
+            "actions": [
+                {
+                  "type": "message",
+                  "label": "จองเลย",
+                  "text": "จองเลย," + userCommand[1]
+                },
+                {
+                  "type": "message",
+                  "label": "ดูวันอื่น",
+                  "text": "ต้องการจองคิววันอื่น"
+                }
+                      ]
+                    }
+      }
+}}]}
+      var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+      return replyJSON;
+     }
+   }
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   // จองเวลา
+   if(userCommand[0] == "จองเลย")
+   {
+     if(values[i][0].toString() == userCommand[1])
+     {
+        var Data01 = sheet.getRange(i+1,2).getValue();
+        var Data02 = sheet.getRange(i+1,3).getValue();
+        var Data03 = sheet.getRange(i+1,4).getValue();
+        var Data04 = sheet.getRange(i+1,5).getValue();
+        var Data05 = sheet.getRange(i+1,6).getValue();
+        var result = {"fulfillmentMessages": [{"platform": "line","type": 4,"payload" : 
+        {
+          "line": {
+            "template": {
+              "imageSize": "cover",
+              "imageAspectRatio": "rectangle",
+              "columns": [
+                {
+                  "thumbnailImageUrl": "https://image.makewebeasy.net/makeweb/0/6Plmz7gra/PreSchool/shutterstock_1024113934.jpg",
+                  "title": "จองเวลาทำฟัน",
+                  "text": "เวลา 10.00 - 11.00",
+                  "actions": [
+                    {
+                      "type": "message",
+                      "label": Data01,
+                      "text": "ต้องการจองคิววันนี้,"+ userCommand[1] +",เวลา 10.00 - 11.00,จอง"
+                    }
+                  ],
+                  "defaultAction": {
+                    "label": "View detail",
+                    "type": "uri",
+                    "uri": "http://example.com/page/123"
+                  },
+                  "imageBackgroundColor": "#FFFFFF"
+                },
+                {
+                  "text": "เวลา 11.00 - 12.00",
+                  "actions": [
+                    {
+                      "type": "message",
+                      "label": Data02,
+                      "text": "ต้องการจองคิววันนี้,"+ userCommand[1] +",เวลา 11.00 - 12.00,จอง"
+                    }
+                  ],
+                  "title": "จองเวลาทำฟัน",
+                  "thumbnailImageUrl": "https://www.thaihealth.or.th/data/content/2018/12/46087/cms/newscms_thaihealth_c_bdghoprtu238.jpg",
+                  "imageBackgroundColor": "#FFFFFF",
+                  "defaultAction": {
+                    "type": "uri",
+                    "label": "View detail",
+                    "uri": "http://example.com/page/123"
+                  }
+                },
+                {
+                  "imageBackgroundColor": "#FFFFFF",
+                  "defaultAction": {
+                    "uri": "http://example.com/page/123",
+                    "type": "uri",
+                    "label": "View detail"
+                  },
+                  "thumbnailImageUrl": "https://www.ttdcdental.com/wp-content/uploads/2019/08/%E0%B8%A3%E0%B9%89%E0%B8%B2%E0%B8%99%E0%B8%AB%E0%B8%A1%E0%B8%AD%E0%B8%9F%E0%B8%B1%E0%B8%99%E0%B9%80%E0%B8%8A%E0%B8%B5%E0%B8%A2%E0%B8%87%E0%B9%83%E0%B8%AB%E0%B8%A1%E0%B9%88-001.jpg",
+                  "text": "เวลา 13.00 - 14.00",
+                  "title": "จองเวลาทำฟัน",
+                  "actions": [
+                    {
+                      "type": "message",
+                      "label": Data03,
+                      "text": "ต้องการจองคิววันนี้,"+ userCommand[1] +",เวลา 13.00 - 14.00,จอง"
+                    }
+                  ]
+                },
+                {
+                  "imageBackgroundColor": "#FFFFFF",
+                  "thumbnailImageUrl": "https://www.tcijthai.com/office-tcij/headpicture/rXW7xm4Thu80133.jpg",
+                  "text": "เวลา 14.00 - 15.00",
+                  "defaultAction": {
+                    "label": "View detail",
+                    "uri": "http://example.com/page/123",
+                    "type": "uri"
+                  },
+                  "actions": [
+                    {
+                      "type": "message",
+                      "label": Data04,
+                      "text": "ต้องการจองคิววันนี้,"+ userCommand[1] +",เวลา 14.00 - 15.00,จอง"
+                    }
+                  ],
+                  "title": "จองเวลาทำฟัน"
+                },
+                {
+                  "text": "เวลา 15.00 - 16.00",
+                  "thumbnailImageUrl": "https://www.khaosod.co.th/wpapp/uploads/2020/03/%E0%B8%97%E0%B8%B1%E0%B8%99%E0%B8%95%E0%B9%81%E0%B8%9E%E0%B8%97%E0%B8%A2%E0%B9%8C.jpg",
+                  "title": "จองเวลาทำฟัน",
+                  "defaultAction": {
+                    "uri": "http://example.com/page/123",
+                    "type": "uri",
+                    "label": "View detail"
+                  },
+                  "imageBackgroundColor": "#FFFFFF",
+                  "actions": [
+                    {
+                      "type": "message",
+                      "label": Data05,
+                      "text": "ต้องการจองคิววันนี้,"+ userCommand[1] +",เวลา 15.00 - 16.00,จอง"
+                    }
+                  ]
+                }
+              ],
+              "type": "carousel"
+            },
+            "type": "template",
+            "altText": "this is a carousel template"
+          }
+        }
+        }]}
+      var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+      return replyJSON;
+     }
+     }
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   if(userCommand[0] == "ต้องการจองคิววันนี้")
+   {
+      //date
+    if(values[i][0].toString() == userCommand[1])
+    { 
+      var Data1 = sheet.getRange(i+1,2).getValue();
+      var Data2 = sheet.getRange(i+1,3).getValue();
+      var Data3 = sheet.getRange(i+1,4).getValue();
+      var Data4 = sheet.getRange(i+1,5).getValue();
+      var Data5 = sheet.getRange(i+1,6).getValue();
+      //time
+      if(userCommand[2] == "เวลา 10.00 - 11.00" && Data1 == "ว่าง")
+      {
+        sheet.getRange(i+1,2).setValue(userCommand[3]);
+        var result = { "fulfillmentMessages": [{"platform": "line","type": 4,"payload" : {"line": {"type": "text","text": "จองสำเร็จ"}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      if(userCommand[2] == "เวลา 11.00 - 12.00" && Data2 == "ว่าง")
+      {
+        sheet.getRange(i+1,3).setValue(userCommand[3]);
+        var result = { "fulfillmentMessages": [{"platform": "line","type": 4,"payload" : {"line": {"type": "text","text": "จองสำเร็จ"}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      if(userCommand[2] == "เวลา 13.00 - 14.00" && Data3 == "ว่าง")
+      {
+        sheet.getRange(i+1,4).setValue(userCommand[3]);
+        var result = { "fulfillmentMessages": [{"platform": "line","type": 4,"payload" : {"line": {"type": "text","text": "จองสำเร็จ"}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      if(userCommand[2] == "เวลา 14.00 - 15.00" && Data4 == "ว่าง")
+      {
+        sheet.getRange(i+1,5).setValue(userCommand[3]);
+        var result = { "fulfillmentMessages": [{"platform": "line","type": 4,"payload" : {"line": {"type": "text","text": "จองสำเร็จ"}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      if(userCommand[2] == "เวลา 15.00 - 16.00" && Data5 == "ว่าง")
+      {
+        sheet.getRange(i+1,6).setValue(userCommand[3]);
+        var result = { "fulfillmentMessages": [{"platform": "line","type": 4,"payload" : {"line": {"type": "text","text": "จองสำเร็จ"}}}]}
+        var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+        return replyJSON;
+      }
+      }
+    }
+ }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ 
+var result = { "fulfillmentMessages": [{"platform": "line","type": 4,"payload" : {"line": {"type": "text","text": "มีรายการจองคิวเวลานี้เรียบร้อยแล้ว กรุณาจองเวลาอื่นครับ"}}}]}
+var replyJSON = ContentService.createTextOutput(JSON.stringify(result)).setMimeType(ContentService.MimeType.JSON);
+return replyJSON;
+}
